@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Devil May Cry: Operation Kshiti</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Special+Elite&display=swap">
+<style>
+:root{--k:#07040a;--r:#d1102a;--r2:#6e0a17;--w:#f1f5f9;--s:#aab4c0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--k);color:var(--w);font-family:'Special Elite','Courier New',monospace;min-height:100vh;overflow-x:hidden}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+#blk{position:fixed;inset:0;background:#000;opacity:0;transition:opacity 1.4s;z-index:1;pointer-events:none}
+.smoke{position:fixed;left:-20%;right:-20%;bottom:-10%;height:45%;background:radial-gradient(ellipse at 30% 100%,rgba(209,16,42,.35),transparent 60%),radial-gradient(ellipse at 75% 100%,rgba(170,180,192,.12),transparent 60%);filter:blur(24px);animation:dr 14s ease-in-out infinite alternate;pointer-events:none}
+@keyframes dr{to{transform:translateX(8%) scale(1.1)}}
+.sc{display:none;position:relative;z-index:2;min-height:100vh;padding:60px 18px;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.sc.on{display:flex;animation:in .9s ease}
+@keyframes in{from{opacity:0;filter:blur(8px) brightness(2)}to{opacity:1;filter:none}}
+h1,h2,.d{font-family:'Cinzel Decorative','Times New Roman',serif;font-weight:900;margin:0}
+h1{font-size:clamp(2.2rem,12vw,4.6rem);color:var(--w);text-shadow:0 0 18px var(--r),0 4px 0 var(--r2)}
+h2{font-size:clamp(1.2rem,6.2vw,2rem);margin-bottom:18px;text-shadow:0 0 14px var(--r)}
+.tag{color:var(--r);letter-spacing:.3em;margin:14px 0 4px}
+.ln{margin:6px 0;opacity:0;animation:fi .8s forwards}
+@keyframes fi{to{opacity:1}}
+button{font-family:'Cinzel Decorative',serif;font-weight:700;font-size:1rem;letter-spacing:.08em;color:var(--w);background:linear-gradient(#e0142f,var(--r2));border:2px solid var(--w);padding:14px 26px;cursor:pointer;box-shadow:0 0 18px rgba(209,16,42,.6);margin:10px 4px}
+button:active{transform:scale(.96)}button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.swords{position:relative;width:160px;height:170px;margin:0 auto 12px;filter:drop-shadow(0 0 14px var(--r))}
+.swords svg{position:absolute;left:60px;top:0;width:40px;height:170px}
+.swords svg:first-child{transform:rotate(35deg)}.swords svg:last-child{transform:rotate(-35deg)}
+#dots{display:flex;gap:12px;margin:18px 0}#dots i{width:18px;height:18px;border:2px solid var(--w);border-radius:50%}
+#dots i.f{background:var(--r);box-shadow:0 0 10px var(--r)}
+.pad{display:grid;grid-template-columns:repeat(3,68px);gap:12px;margin:10px 0}.pad button{padding:16px 0;margin:0;font-size:1.2rem;background:#14090d}
+.msg{min-height:3.4em;color:#ff6b7d;max-width:300px}.shk{animation:shk .4s}@keyframes shk{20%{transform:translateX(-10px)}60%{transform:translateX(10px)}}
+#fl{position:fixed;inset:0;background:radial-gradient(circle,#fff,var(--r));opacity:0;pointer-events:none;z-index:8}#fl.on{animation:fl .9s}
+@keyframes fl{30%{opacity:.9}to{opacity:0}}
+.paper{width:min(560px,100%);text-align:left;background:rgba(14,6,10,.92);border:2px solid var(--r);box-shadow:0 0 28px rgba(209,16,42,.45);padding:22px 20px;line-height:1.7;margin-bottom:10px}
+.paper p{margin:0 0 16px;white-space:pre-line}.lh{font-size:1.2rem;color:#ff4d63;text-align:center}.ps{color:var(--s);border-top:1px dashed var(--r);padding-top:14px}
+.env{position:relative;width:min(300px,84vw);height:190px;margin:26px auto 14px;perspective:800px}
+.eb{position:absolute;inset:0;z-index:2;background:linear-gradient(to top right,transparent 49.4%,rgba(0,0,0,.4) 50%,transparent 50.6%),linear-gradient(to top left,transparent 49.4%,rgba(0,0,0,.4) 50%,transparent 50.6%),#9a0c20;border:2px solid #000;box-shadow:0 0 30px rgba(209,16,42,.5)}
+.ef{position:absolute;left:0;right:0;top:0;height:58%;background:#b90f27;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s,z-index 0s .4s;z-index:3}
+.env.open .ef{transform:rotateX(180deg);z-index:1}
+.seal{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;z-index:4;display:grid;place-items:center;font-family:'Cinzel Decorative',serif;font-weight:900;background:radial-gradient(circle at 35% 30%,#ff5368,#a30b1e 60%,#5a0510);box-shadow:0 3px 10px #000;transition:all .6s}
+.env.open .seal{opacity:0;transform:scale(1.8)}
+#pn{display:none}#pn.show{display:block;animation:in .9s}
+.gifts{display:flex;flex-direction:column;gap:20px;width:min(380px,92vw)}
+.gb{width:92px;height:92px;padding:0;margin:0;position:relative;background:var(--r);animation:fl2 2.4s ease-in-out infinite alternate}
+.gb::before,.gb::after{content:"";position:absolute;background:var(--w)}.gb::before{left:44%;top:0;bottom:0;width:12%}.gb::after{top:44%;left:0;right:0;height:12%}
+.gift:nth-child(2) .gb{animation-delay:.5s}.gift:nth-child(3) .gb{animation-delay:1s}
+@keyframes fl2{to{transform:translateY(-8px) rotate(2deg)}}
+.gift.open .gb{animation:none;transform:scale(.8);opacity:.55}
+.gm{max-height:0;overflow:hidden;opacity:0;transition:all .7s;margin:0;line-height:1.6}.gift.open .gm{max-height:700px;opacity:1;margin-top:12px}
+.gm img{width:100%;margin-top:10px;border:2px solid var(--r)}
+.frame{width:min(340px,88vw);padding:12px;background:#0c0609;border:2px solid var(--r);box-shadow:0 0 30px rgba(209,16,42,.55),inset 0 0 20px rgba(209,16,42,.3);transform:rotate(-1.5deg)}
+.frame.sw{animation:fr .7s}@keyframes fr{from{opacity:0;transform:rotate(3deg) scale(.9)}}
+.frame img{width:100%;max-height:55vh;object-fit:contain;display:block}
+.vinyl{width:190px;height:190px;border-radius:50%;margin:0 auto 18px;background:radial-gradient(circle,var(--r) 0 20%,#050304 21% 24%,transparent 25%),repeating-radial-gradient(circle,#161012 0 3px,#0b0709 3px 6px);border:3px solid #2a1c20;box-shadow:0 0 28px var(--r2);animation:sp 5s linear infinite paused}
+.vinyl.spin{animation-play-state:running}@keyframes sp{to{transform:rotate(360deg)}}
+#sk{width:min(300px,80vw);accent-color:var(--r);display:block;margin:6px auto}
+#mb{position:fixed;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:9;width:46px;height:46px;border-radius:50%;padding:0;margin:0;display:none;font-size:.9rem}
+.pulse{animation:pl 1s infinite}@keyframes pl{50%{box-shadow:0 0 0 12px rgba(209,16,42,0)}}
+.fx{display:none}.fx.show{display:block;animation:fi 1s forwards}
+.jp{font-size:clamp(2.4rem,13vw,8rem);color:#fff;text-shadow:0 0 12px #fff,0 0 30px var(--r),0 0 70px var(--r),0 6px 0 var(--r2)}
+.jp.show{animation:slam .7s cubic-bezier(.2,1.8,.4,1),pu 2s ease-in-out .7s infinite alternate}
+@keyframes slam{from{transform:scale(3.5) rotate(-8deg);opacity:0}}@keyframes pu{to{text-shadow:0 0 20px #fff,0 0 50px var(--r),0 0 110px var(--r),0 6px 0 var(--r2)}}
+#s8.shake{animation:shk .5s}.fin{font-family:'Cinzel Decorative',serif;font-weight:700;font-size:clamp(1rem,5vw,1.5rem);margin:20px 0 6px}
+.em{position:fixed;bottom:-40px;font-size:2rem;z-index:3;pointer-events:none;animation:rs 5s linear forwards}@keyframes rs{to{transform:translateY(-115vh) rotate(25deg)}}
+#eg{position:fixed;left:10px;bottom:10px;z-index:9;display:none;padding:10px 14px;margin:0;font-size:.8rem}
+#ed{position:fixed;inset:0;z-index:20;background:#0b070a;overflow:auto;padding:16px;display:none;text-align:left;font:14px system-ui,sans-serif}
+#ed.on{display:block}#ed label{display:block;margin:12px 0 4px;font-weight:600}
+#ed input:not([type=file]),#ed textarea{width:100%;padding:8px;background:#1a1216;color:#fff;border:1px solid #555;font:inherit}
+#ed button{font:600 14px system-ui;letter-spacing:0;padding:10px 14px}
+@media(prefers-reduced-motion:reduce){.smoke,.vinyl,.gb{animation:none}}
+</style></head><body>
+<canvas id="fx" aria-hidden="true"></canvas><div class="smoke"></div><div id="blk"></div><div id="fl"></div>
+<svg width="0" height="0" style="position:absolute"><symbol id="sw" viewBox="0 0 40 200"><path d="M20 0l8 120h-16z" fill="#dfe7ef"/><path d="M20 0l2 120h-2z" fill="#9aa6b3"/><rect x="4" y="120" width="32" height="7" rx="3" fill="#d1102a"/><rect x="17" y="127" width="6" height="55" fill="#3a2a30"/><circle cx="20" cy="190" r="8" fill="#d1102a"/></symbol></svg>
+<button id="mb" aria-label="Pause or resume music">♪</button>
+
+<section class="sc on" id="s1">
+<div class="swords"><svg viewBox="0 0 40 200"><use href="#sw"/></svg><svg viewBox="0 0 40 200"><use href="#sw"/></svg></div>
+<h1>DEVIL MAY CRY</h1>
+<p class="tag ln" style="animation-delay:.8s">CLASSIFIED MISSION</p>
+<p class="ln" style="animation-delay:1.6s">AGENT: KSHITI</p>
+<p class="ln" style="animation-delay:2.4s;max-width:320px">MISSION: MAKE HER BIRTHDAY UNFORGETTABLE.</p>
+<button id="go" class="ln" style="animation-delay:3.2s">START MISSION</button>
+</section>
+
+<section class="sc" id="s2"><h2>ACCESS RESTRICTED</h2><p>ONLY THE CHOSEN HUNTER MAY ENTER.</p>
+<div id="dots"></div><div class="pad" id="pad"></div><p class="msg" id="msg" aria-live="polite"></p></section>
+
+<section class="sc" id="s3"><h2>HAPPY BIRTHDAY, KSHITI!</h2><article class="paper" id="letter"></article><button id="n3" class="ln">NEXT</button></section>
+
+<section class="sc" id="s4"><h2>KSHITI, YOU HAVE ANOTHER MESSAGE.</h2>
+<div class="env" id="env"><div class="ef"></div><div class="seal">D</div><div class="eb"></div></div>
+<button id="open">OPEN</button><article class="paper" id="pn"></article><button id="n4" hidden>NEXT</button></section>
+
+<section class="sc" id="s5"><h2>THREE GIFTS. ONE LEGEND.</h2>
+<div class="gifts"><div class="gift"><button class="gb" aria-label="Open gift 1"></button><p class="gm"></p></div><div class="gift"><button class="gb" aria-label="Open gift 2"></button><p class="gm"></p></div><div class="gift"><button class="gb" aria-label="Open gift 3"></button><p class="gm"></p></div></div>
+<button id="n5">NEXT</button></section>
+
+<section class="sc" id="s6"><h2>THE MEMORIES WE MADE</h2>
+<div class="frame" id="fr"><img id="ph" alt="A memory"><p id="cap" style="margin:10px 0 2px"></p><small id="ct"></small></div>
+<div id="ar"><button id="pv" aria-label="Previous photo">◀</button><button id="nx" aria-label="Next photo">▶</button></div>
+<button id="n6">NEXT</button></section>
+
+<section class="sc" id="s7"><h2>ONE LAST THING...</h2><div class="vinyl" id="vin"></div>
+<p class="d" style="font-size:1.4rem;margin:0">Still Love You</p><p class="tag" style="margin-top:6px">GT-RST</p>
+<div id="pl"><button id="pp">▶ PLAY</button><input type="range" id="sk" min="0" max="100" value="0" aria-label="Seek"></div>
+<button id="n7">FINAL REVEAL</button></section>
+
+<section class="sc" id="s8"><div class="swords fx" id="f0"><svg viewBox="0 0 40 200"><use href="#sw"/></svg><svg viewBox="0 0 40 200"><use href="#sw"/></svg></div>
+<div class="d fx" id="f1" style="font-size:clamp(1.6rem,8vw,3rem)">MISSION COMPLETE</div>
+<div class="d fx" id="f2" style="font-size:clamp(1.4rem,7vw,2.6rem)">HAPPY BIRTHDAY, KSHITI!</div>
+<div class="d fx jp" id="f3">JACKPOT!</div><p class="fin fx" id="f4"></p>
+<div class="fx" id="f5"><button id="rp">REPLAY MISSION</button></div></section>
+
+<button id="eg">EDIT</button>
+<div id="ed"><h2 style="font:700 20px system-ui">Creator editor</h2><div id="fl2"></div>
+<label>Song file (audio)</label><input type="file" id="fs" accept="audio/*"><small id="ss"></small>
+<label>Gift 3 photo (optional)</label><input type="file" id="fg" accept="image/*"><small id="sg"></small>
+<label>Memory photos (select one or more)</label><input type="file" id="fp" accept="image/*" multiple><small id="sp"></small><div id="pl2"></div>
+<p><button id="sv">SAVE AND PUBLISH</button> <button id="cl">CLOSE</button></p><p id="st"></p></div>
+
+<script id="cfg" type="application/json">{"code":"2001","letter":"HAPPY BIRTHDAYYYY!! ❤️😭\n\nHonestly, where do I even start? Thank you for being one of the funniest, most chaotic people in my life. Thank you for all the laughs, the random conversations, the memes, the nonsense, and for making even the most boring days entertaining. I genuinely appreciate having someone like you in my life, and I'm grateful for all the memories we've made together.\n\nNever change who you are (actually, maybe change a little because you're not always right 😭). I hope this new chapter of your life brings you endless happiness, success, laughter and everything your heart wishes for. May your phone never die at the worst possible moment, may your WiFi never lag, may your food always be delicious, and may you never run out of things to complain about.\n\nI hope you have the most amazing birthday because you genuinely deserve it. Keep being your weird, funny, annoying and wonderful self. Don't let anyone dull your sparkle, and remember that you're appreciated more than you probably realise.\n\nThank you for being YOU. Here's to more memories, more laughs, more memes and many more years of friendship.\n\nLOVE YOUUU!! ❤️🎂\n\nP.S. May your pillow always be cold, your charger always be nearby, and may you never experience the pain of accidentally biting your tongue. 😭","env":"This one is just between us. Whatever happens, I've got your back, and I know you've got mine. Best friends, always. ❤️","g1":"Congratulations! You have unlocked one free day of being right about everything. (Offer expires at midnight.) 😭","g2":"You make ordinary days feel worth remembering. I'm so glad you're my friend. ❤️","g3":"The best gift is you, obviously. Now go and get yourself some cake. 🎂","g3img":"","fin":"YOU'RE ONE OF A KIND. NEVER FORGET THAT.","song":"","photos":[]}</script>
+<script>
+(function(){
+const SRC="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let C=JSON.parse($('#cfg').textContent);C.photos=C.photos||[];
+/* particles */
+const cv=$('#fx'),cx=cv.getContext('2d');let P=[],W,H;
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener('resize',rs);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function burst(x,y,n){if(RM)return;for(let i=0;i<n;i++){const a=Math.random()*6.283,v=2+Math.random()*6;P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,s:2+Math.random()*3,c:Math.random()<.5?'#d1102a':'#fff',l:1,t:1})}}
+(function lp(){cx.clearRect(0,0,W,H);
+if(!RM&&Math.random()<.35&&P.length<140)P.push({x:Math.random()*W,y:H+10,vx:(Math.random()-.5)*.6,vy:-(.5+Math.random()*1.3),s:1+Math.random()*2.5,c:'#ff2d46',l:1,t:0});
+P=P.filter(p=>{p.x+=p.vx;p.y+=p.vy;if(p.t){p.vy+=.12;p.l-=.014}else p.l-=.003;if(p.l<=0)return false;cx.globalAlpha=p.l;cx.fillStyle=p.c;cx.beginPath();cx.arc(p.x,p.y,p.s,0,6.283);cx.fill();return true});
+cx.globalAlpha=1;requestAnimationFrame(lp)})();
+/* music */
+const au=new Audio();au.preload='auto';if(C.song)au.src=C.song;
+let started=false,blocked=false;
+function upd(){const p=!au.paused;$('#mb').textContent=p?'❚❚':'▶';$('#pp').textContent=p?'❚❚ PAUSE':'▶ PLAY';$('#vin').classList.toggle('spin',p);$('#mb').classList.toggle('pulse',blocked&&!p)}
+au.onplay=()=>{blocked=false;upd()};au.onpause=upd;
+au.onended=()=>{au.currentTime=57;au.play().catch(()=>{})};
+au.ontimeupdate=()=>{if(au.duration){$('#sk').max=au.duration;$('#sk').value=au.currentTime}};
+function startMusic(){if(!C.song)return;$('#mb').style.display='block';if(started)return;started=true;
+const seek=()=>{au.currentTime=57};if(au.readyState>=1)seek();else au.addEventListener('loadedmetadata',seek,{once:true});
+au.play().catch(()=>{blocked=true;upd()})}
+function tg(){au.paused?au.play().catch(()=>{}):au.pause()}
+$('#mb').onclick=$('#pp').onclick=tg;$('#sk').oninput=e=>{au.currentTime=+e.target.value};
+/* scenes */
+const S=$$('.sc');let cur=1,tm=[];
+function go(n){cur=n;S.forEach((s,i)=>s.classList.toggle('on',i===n-1));scrollTo(0,0);
+if(n===1)reset();if(n===3)letter();if(n===6){gi=0;gal(0)}if(n===7){$('#pl').hidden=!C.song;upd()}
+if(n===8)finale();else{tm.forEach(clearTimeout);tm.forEach(clearInterval);tm=[];$('#blk').style.opacity=0}}
+function reset(){en='';dots();$('#msg').textContent='';lock=false;$('#env').classList.remove('open');$('#pn').classList.remove('show');$('#open').hidden=false;$('#n4').hidden=true;$$('.gift').forEach(g=>g.classList.remove('open'));$$('.fx').forEach(e=>e.classList.remove('show'))}
+$('#go').onclick=()=>{startMusic();go(2)};
+/* passcode */
+let en='',wi=0,lock=false;
+const M=["WRONG. Even a demon would have guessed better.","Not stylish enough. Try again.","That code gets a D rank.","Denied! Maybe a slice of pizza will help you remember.","Wrong again. Dante would have kicked the door down by now.","Access denied. Check the hint your best friend definitely gave you.","Nope. Even the Devil Arms are judging you.","Still wrong. That is definitely not a Jackpot."];
+function dots(){const d=$('#dots');d.textContent='';for(let i=0;i<C.code.length;i++){const e=document.createElement('i');if(i<en.length)e.className='f';d.append(e)}}
+function chk(){if(lock)return;if(en===C.code){lock=true;$('#msg').textContent='ACCESS GRANTED';const f=$('#fl');f.className='';void f.offsetWidth;f.className='on';burst(W/2,H/2,90);setTimeout(()=>go(3),1300)}
+else{$('#msg').textContent=M[wi++%M.length];const p=$('#pad');p.classList.remove('shk');void p.offsetWidth;p.classList.add('shk');en='';dots()}}
+['1','2','3','4','5','6','7','8','9','⌫','0','✓'].forEach(k=>{const b=document.createElement('button');b.textContent=k;b.onclick=()=>{if(lock)return;if(k==='⌫')en=en.slice(0,-1);else if(k==='✓'){chk();return}else if(en.length<C.code.length){en+=k;dots();if(en.length===C.code.length){chk();return}}dots()};$('#pad').append(b)});
+dots();
+/* letter */
+function letter(){const L=$('#letter');L.textContent='';const ps=(C.letter||'').split(/\n\n+/);ps.forEach((t,i)=>{const p=document.createElement('p');p.textContent=t;p.className='ln'+(i?'':' d lh')+(/^P\.S\./.test(t)?' ps':'');p.style.animationDelay=i*1.2+'s';L.append(p)});$('#n3').style.animationDelay=ps.length*1.2+'s'}
+$('#n3').onclick=()=>go(4);
+/* envelope */
+$('#pn').textContent=C.env;
+$('#open').onclick=function(){$('#env').classList.add('open');this.hidden=true;setTimeout(()=>{$('#pn').classList.add('show');$('#n4').hidden=false},900)};
+$('#n4').onclick=()=>go(5);
+/* gifts */
+$$('.gift').forEach((g,i)=>{const m=g.querySelector('.gm');m.textContent=C['g'+(i+1)];if(i===2&&C.g3img){const im=document.createElement('img');im.src=C.g3img;im.alt='Surprise photo';m.append(im)}
+g.querySelector('.gb').onclick=e=>{const o=g.classList.toggle('open');if(o){const r=e.currentTarget.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,60)}}});
+$('#n5').onclick=()=>go(C.photos.length?6:7);
+/* gallery */
+let gi=0;
+function gal(d){const p=C.photos;if(!p.length)return;gi=(gi+d+p.length)%p.length;const f=$('#fr');f.classList.remove('sw');void f.offsetWidth;f.classList.add('sw');$('#ph').src=p[gi].url;$('#cap').textContent=p[gi].cap||'';$('#ct').textContent=(gi+1)+' / '+p.length;$('#ar').hidden=p.length<2}
+$('#pv').onclick=()=>gal(-1);$('#nx').onclick=()=>gal(1);$('#n6').onclick=()=>go(7);
+setInterval(()=>{if(cur===6)gal(1)},5000);
+$('#n7').onclick=()=>go(8);
+/* finale */
+function sh(i){$('#'+i).classList.add('show')}function hd(i){$('#'+i).classList.remove('show')}
+function boom(n){for(let i=0;i<n;i++)setTimeout(()=>burst(Math.random()*W,H*(.15+Math.random()*.5),60),i*350)}
+function emo(){const e=document.createElement('div');e.className='em';e.textContent=['🎂','🎉','❤️','🎁'][Math.random()*4|0];e.style.left=Math.random()*90+'vw';document.body.append(e);setTimeout(()=>e.remove(),5000)}
+function finale(){tm.forEach(clearTimeout);tm.forEach(clearInterval);tm=[];['f0','f1','f2','f3','f4','f5'].forEach(hd);$('#f4').textContent=C.fin;
+$('#blk').style.opacity=1;const at=(ms,f)=>tm.push(setTimeout(f,ms));
+at(1700,()=>sh('f1'));at(4300,()=>{hd('f1');sh('f2')});
+at(6900,()=>{hd('f2');sh('f0');sh('f3');$('#blk').style.opacity=0;const s=$('#s8');s.classList.remove('shake');void s.offsetWidth;s.classList.add('shake');boom(6)});
+at(9500,()=>{sh('f4');boom(8);tm.push(setInterval(()=>{if(cur!==8)return;boom(1);emo()},1200))});at(12000,()=>sh('f5'))}
+$('#rp').onclick=()=>go(1);
+/* creator editor */
+let AS,ART;
+const FL=[['Passcode (digits only)','code'],['Letter (blank line between paragraphs)','letter',9],['Envelope message','env',4],['Gift 1 (funny)','g1',3],['Gift 2 (heartfelt)','g2',3],['Gift 3 (text)','g3',3],['Final message','fin',2]];
+FL.forEach(([l,k,t])=>{const w=document.createElement('label');w.textContent=l;const i=document.createElement(t?'textarea':'input');if(t)i.rows=t;i.value=C[k];i.oninput=()=>C[k]=i.value;$('#fl2').append(w,i)});
+async function up(f,st){st.textContent='Uploading...';try{const r=await AS.upload(f);st.textContent='Uploaded. Remember to save.';return r.url}catch(e){st.textContent='Upload failed: '+(e.message||e.code||'error');return null}}
+$('#fs').onchange=async e=>{const u=await up(e.target.files[0],$('#ss'));if(u)C.song=u};
+$('#fg').onchange=async e=>{const u=await up(e.target.files[0],$('#sg'));if(u)C.g3img=u};
+$('#fp').onchange=async e=>{for(const f of e.target.files){const u=await up(f,$('#sp'));if(u)C.photos.push({url:u,cap:''})}rp()};
+function rp(){const d=$('#pl2');d.textContent='';C.photos.forEach((p,i)=>{const r=document.createElement('div');r.style.cssText='display:flex;gap:8px;margin:8px 0;align-items:center';const im=document.createElement('img');im.src=p.url;im.style.cssText='width:56px;height:56px;object-fit:cover';const c=document.createElement('input');c.value=p.cap;c.placeholder='Caption';c.oninput=()=>p.cap=c.value;const x=document.createElement('button');x.textContent='X';x.onclick=()=>{C.photos.splice(i,1);rp()};r.append(im,c,x);d.append(r)})}rp();
+$('#eg').onclick=()=>$('#ed').classList.add('on');$('#cl').onclick=()=>$('#ed').classList.remove('on');
+$('#sv').onclick=async()=>{const j=JSON.stringify(C).replace(/</g,'\\u003c');
+const h=SRC.replace(/(<script id="cfg" type="application\/json">)[\s\S]*?(<\/script>)/,(m,a,b)=>a+j+b);
+try{$('#st').textContent='Saving...';await ART.publish(h)}catch(e){$('#st').textContent='Save failed: '+(e.code||e.message)}};
+(async()=>{try{const u=await claude.use('user');if(u&&u.canEdit()){AS=await claude.use('assets');ART=await claude.use('artifact');if(AS&&ART)$('#eg').style.display='block'}}catch(e){}})();
+})();
+</script></body></html>
